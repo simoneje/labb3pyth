@@ -28,24 +28,41 @@ class MovieDB():
             data = search.json()
             try: 
                 with open('hej.json', 'w', encoding="utf-8") as big:
-                    wdata = json.dumps(data, ensure_ascii=False, indent=2)
-                    big.write(wdata)
-                    print(wdata)
+                    json.dump(data, big, ensure_ascii=False, indent=2)
             except FileNotFoundError as error:
                 print(error)
+            lol = data['Search']
+            count = 0
+            for i in lol:
+                count += 1
+                print(count,i['Title'],i['Year'])
+            
+            nsearch = input('Skriv exakt vilken title du menar')
+            for u in range(len(lol)):
+                
+                if nsearch == lol[u]['Title']:
+                    try:
+                        with open('savedsearch.json', 'w', encoding="utf-8") as jobb:
+                            json.dump(lol[u], jobb, ensure_ascii=False, indent=2)
+                    except FileNotFoundError:
+                        print(FileNotFoundError)
+                    print(lol[u])
 
+                
+            
+            
         SearchFilm(self)
         
-        def SortFilm(self, filename):
-            newlist = []           
-            try:
-                with open('hej.json', encoding="utf-8") as sJson:
-                    newlist = json.load(sJson)                                    
-            except FileNotFoundError as error:
-                print(error)
+        #def SortFilm(self, filename):
+            #newlist = [] 
+            #listig = []          
+            #try:
+            #    with open('hej.json', encoding="utf-8") as sJson:
+            #        newlist = json.load(sJson)                                    
+            #except FileNotFoundError as error:
+            #    print(error)
 
-            for line in newlist:
-                newlist
+
 
 
 
