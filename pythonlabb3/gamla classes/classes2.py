@@ -7,8 +7,6 @@ savedVal = []
 
 class meny():
     def __init__(self):   
-        self.sh = SokHistorik()
-        self.movieSearch = MovieDB(self.sh)
         self.Meny()
 
     def Meny(self):
@@ -16,37 +14,31 @@ class meny():
         while True:
             choice = input('\n1)Välj film\n2)Visa senaste sökningar\n3)Avsluta\n')    
             if choice == '1':
-                self.movieSearch.SearchFilm()
+                MovieDB()
+                #Meny(self)                 
+                break
             elif choice == '2':
-                l = self.sh.historiken()
-                for a in l:
-                    print('1, ' + a)
-                
-                value = input('Välj sökterm')
-                self.movieSearch.search(l[int(value)])
-
                 SokHistorik()
                 DoubleMeny()
+                #Meny(self)
                     #print('1)Visa information om senaste sökningar\n2)Visa information om vald sökt film\n')
+                break
             elif choice == '3':
+                #sys.exit()
                 break
             else:
                 break
+                #Meny(self)
 
 class MovieDB():
     global savedVal
-    def __init__(self, sh):
-        self.sh = sh
+    def __init__(self):
+        self.SearchFilm()
 
     def SearchFilm(self):
         try:
             iput = input('Sök\n')
-            self.sh.AddTerm(iput)
-            self.search(iput)
-
-        except: print('försök igen')
-
-    def search(self, iput):
+            sokHist.AddTerm(input)
             #sokTermer.append(iput) + ', '
             try:
                 search = requests.get(f'http://www.omdbapi.com/?i=tt3896198&apikey=3dde47b4&s={iput}')
@@ -57,7 +49,6 @@ class MovieDB():
                     json.dump(data, big, ensure_ascii=False, indent=2)
             except FileNotFoundError as error:
                 print(error)
-            
             lol = data['Search']
             count = 0
             for i in lol:
@@ -80,9 +71,8 @@ class MovieDB():
             except FileNotFoundError:
                 print(FileNotFoundError)
             print(LastSearch())
-
-
-
+        except: print('försök igen')
+   
 
 class LastSearch():
     def __init__(self):
@@ -104,9 +94,8 @@ class SokHistorik():
         self.sokTermer.append(value)
 
     def historiken(self):
-        return self.sokTermer
-        #for s in self.sokTermer:
-        #    print(s)
+        for s in self.sokTermer:
+            print(s)
         
         # if value in sokTermer:
         #     ind = value.strip('"\[]')
